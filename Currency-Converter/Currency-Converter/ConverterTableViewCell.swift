@@ -19,13 +19,9 @@ class ConverterTableViewCell: UITableViewCell {
     @IBOutlet weak var totalMoney: UILabel!
     
     private func updateUI() {
-        
-    }
-    
-    //    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
+        guard let currencyData = currencyData else { return }
+        currencyType.text = currencyData.currency
+        totalMoney.text = "\(currencyData.currencyAmount)"
 
+    }
 }

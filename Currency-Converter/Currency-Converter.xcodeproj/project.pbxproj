@@ -14,7 +14,6 @@
 		89D60393202F1C1700E5C100 /* ConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D60392202F1C1700E5C100 /* ConverterViewController.swift */; };
 		89D60397202F22BB00E5C100 /* ConverterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D60396202F22BB00E5C100 /* ConverterTableViewCell.swift */; };
 		89D60399202F246C00E5C100 /* CurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D60398202F246C00E5C100 /* CurrencyModel.swift */; };
-		89D6039B202F24FE00E5C100 /* ConverterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D6039A202F24FE00E5C100 /* ConverterTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		89D60392202F1C1700E5C100 /* ConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewController.swift; sourceTree = "<group>"; };
 		89D60396202F22BB00E5C100 /* ConverterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterTableViewCell.swift; sourceTree = "<group>"; };
 		89D60398202F246C00E5C100 /* CurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
-		89D6039A202F24FE00E5C100 /* ConverterTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +60,6 @@
 			children = (
 				89D60398202F246C00E5C100 /* CurrencyModel.swift */,
 				89D60392202F1C1700E5C100 /* ConverterViewController.swift */,
-				89D6039A202F24FE00E5C100 /* ConverterTableViewController.swift */,
 				89D60396202F22BB00E5C100 /* ConverterTableViewCell.swift */,
 				89D6037F202F195900E5C100 /* Main.storyboard */,
 				89D60387202F195900E5C100 /* Info.plist */,
@@ -154,7 +151,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				89D60393202F1C1700E5C100 /* ConverterViewController.swift in Sources */,
-				89D6039B202F24FE00E5C100 /* ConverterTableViewController.swift in Sources */,
 				89D60397202F22BB00E5C100 /* ConverterTableViewCell.swift in Sources */,
 				89D60399202F246C00E5C100 /* CurrencyModel.swift in Sources */,
 				89D6037C202F195900E5C100 /* AppDelegate.swift in Sources */,
