@@ -21,3 +21,23 @@ class CurrencyModel {
         self.timesConverted = timesConverted
     }
 }
+
+class ConvertedCurrencyModel {
+    fileprivate enum Constants {
+        enum Keys {
+            static let currency = "currency"
+            static let amount = "amount"
+        }
+    }
+    
+    var currency: String
+    var amount: Double
+    
+    init?(json: [String: Any]) {
+        guard let currency = json[Constants.Keys.currency] as? String,
+            let amount = json[Constants.Keys.amount] as? String else { return nil }
+        
+        self.currency = currency
+        self.amount = Double(amount)!
+    }
+}

@@ -34,9 +34,9 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     
     private var outputAmount: Double?
     
-    private var currencyFrom: String? { didSet { updateResult()} }
+    private var currencyFrom: String? { didSet { updateResult() } }
 
-    private var currencyTo: String?
+    private var currencyTo: String? { didSet { updateResult() } }
 
     @IBOutlet weak var fromEUR: UIButton!
     
@@ -86,16 +86,45 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        input.resignFirstResponder()
     }
     
     private func updateResult() {
-        if let inputAmount = inputAmount {
-            output.text = String(inputAmount)
-        } else {
-            guard let input = input.text, !input.isEmpty else { return }
-            output.text = "ERROR. Please use numbers."
+        guard let currencyTo = currencyTo, let currencyFrom = currencyFrom  else {
+            output.text = "ERROR. Please chose currencies."
+            return
+        }
+        
+        guard let inputAmount = inputAmount else {
+            guard let input = input.text, !input.isEmpty else {
+                output.text = "ERROR. Please use numbers."
+                return
+            }
+            return
+        }
+        
+        let urlString = URL(string: "http://api.evp.lt/currency/commercial/exchange/\(inputAmount)-\(currencyFrom)/\(currencyTo)/latest")
+        if let url = urlString {
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    if let data = data {
+                        do {
+                            let object = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+                            if let converted = ConvertedCurrencyModel(json: object) {
+                                DispatchQueue.main.async {
+                                    self.output.text = String(converted.amount)
+                                }
+                            } else {
+                                print("Failed to make a model.")
+                            }
+                        } catch {
+                            print("json error: \(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
+            task.resume()
         }
     }
     
