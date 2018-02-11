@@ -13,27 +13,29 @@ class AccountSummaryViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     private var currencyModels = [CurrencyModel]()
-    
-    private let currencyInitDefaults: [(type: String, amount: Double)] = [ ("EUR", 1000.0), ("USD", 0.0), ("JPY", 0.0)]
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if currencyModels.isEmpty {
-            let userDefaults = UserDefaults.standard
-            if userDefaults.value(forKey: "dataModels") == nil {
-                for currency in currencyInitDefaults {
-                    let newCurrency = CurrencyModel.init(currency.type, currency.amount, totalTaxes: 0.0)
-                    currencyModels.append(newCurrency)
-                }
-                try? userDefaults.set(PropertyListEncoder().encode(currencyModels), forKey: "dataModels")
-                userDefaults.synchronize()
-                
-            } else {
-                let encoded = userDefaults.object(forKey: "dataModels") as! Data
-                guard let recoveredCurrencyModels = try? PropertyListDecoder().decode([CurrencyModel].self, from: encoded) else { return }
-                currencyModels = recoveredCurrencyModels
+        
+        let userDefaults = UserDefaults.standard
+        
+        if userDefaults.value(forKey: "timesConverted") == nil {
+            userDefaults.setValue(0, forKey: "timesConverted")
+            userDefaults.synchronize()
+        }
+        
+        if userDefaults.value(forKey: "dataModels") == nil {
+            for currency in currencyInitDefaults {
+                let newCurrency = CurrencyModel.init(currency.type, currency.amount, totalTaxes: 0.0)
+                currencyModels.append(newCurrency)
             }
+            try? userDefaults.set(PropertyListEncoder().encode(currencyModels), forKey: "dataModels")
+            userDefaults.synchronize()
+            
+        } else {
+            let encodedCurrencyModels = userDefaults.object(forKey: "dataModels") as! Data
+            guard let retrievedCurrencyModels = try? PropertyListDecoder().decode([CurrencyModel].self, from: encodedCurrencyModels) else { return }
+            currencyModels = retrievedCurrencyModels
         }
     }
     
@@ -42,9 +44,6 @@ class AccountSummaryViewController: UIViewController {
         tableView.reloadData()
     }
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationSegue = segue.destination as? ConverterViewController, segue.identifier == "convert" {
             destinationSegue.currentCurrencyModels = currencyModels

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConverterViewController: UIViewController, UITextFieldDelegate {
+class ConverterViewController: UIViewController {
     
     var currentCurrencyModels: [CurrencyModel]?
     
@@ -19,6 +19,8 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     private var currencyFrom: String? { didSet { updateResult() } }
     
     private var currencyTo: String? { didSet { updateResult() } }
+    
+    private var canBeConverted: Bool = false
     
     @IBOutlet weak var input: UITextField!
     
@@ -80,23 +82,28 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
         currencyTo = sender.titleLabel?.text
     }
     
-    private var canBeConverted: Bool = false
-    
     @IBAction func finish(_ sender: UIButton) {
         if canBeConverted {
             let userDefaults = UserDefaults.standard
+            
             if let userDefaultsTimesConverted = userDefaults.value(forKey: "timesConverted") as? Int {
                 userDefaults.setValue(userDefaultsTimesConverted + 1, forKey: "timesConverted")
+                userDefaults.synchronize()
             }
             
             if let currentCurrencyModels = currentCurrencyModels {
                 for currentCurrencyModel in currentCurrencyModels {
-                    if currencyFrom == currentCurrencyModel.currency, let input = input.text, let inputAmount = Double(input), let taxes = taxes.text, let taxesAmount = Double(taxes) {
+                    if currencyFrom == currentCurrencyModel.currency,
+                        let input = input.text, let inputAmount = Double(input),
+                        let taxes = taxes.text, let taxesAmount = Double(taxes)
+                    {
                         currentCurrencyModel.currencyAmount -= (inputAmount + taxesAmount)
                         currentCurrencyModel.totalTaxes += taxesAmount
                     }
                     
-                    if currencyTo == currentCurrencyModel.currency, let output = output.text, let outputAmount = Double(output) {
+                    if currencyTo == currentCurrencyModel.currency,
+                        let output = output.text, let outputAmount = Double(output)
+                    {
                         currentCurrencyModel.currencyAmount += outputAmount
                     }
                 }
@@ -175,6 +182,7 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
                                         for currentCurrencyModel in currentCurrencyModels {
                                             if currencyFrom == currentCurrencyModel.currency {
                                                 let totalAmount = inputAmount + conversionTaxesAmount
+                                                
                                                 if currentCurrencyModel.currencyAmount >= totalAmount {
                                                     self.output.text = converted.amount.setFloatingPointAndConvertToString()
                                                     self.canBeConverted = true
@@ -210,7 +218,9 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
             return convertedAmount * conversionTaxesRate
         }
     }
-    
+}
+
+extension ConverterViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         output.text = nil
         return true

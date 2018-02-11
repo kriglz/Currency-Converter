@@ -7,3 +7,5 @@
 //
 
 let conversionTaxesRate: Double = 0.007
+
+let currencyInitDefaults: [(type: String, amount: Double)] = [ ("EUR", 1000.0), ("USD", 0.0), ("JPY", 0.0)]
