@@ -32,7 +32,7 @@ class AccountSummaryViewController: UIViewController {
             }
 
             for currencyType in currencyTypes {
-                let currencyAmount = userDefaults.value(forKey: currencyType) as? Float
+                let currencyAmount = userDefaults.value(forKey: currencyType) as? Double
                 if let currencyAmount = currencyAmount {
                     let newCurrency = CurrencyModel.init(currencyType,
                                                          currencyAmount,

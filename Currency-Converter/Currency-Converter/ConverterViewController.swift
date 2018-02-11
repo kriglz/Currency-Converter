@@ -8,12 +8,19 @@
 
 import UIKit
 
-class ConverterViewController: UIViewController {
+class ConverterViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func finish(_ sender: UIButton) {
         self.dismiss(animated: true) {
             // TODO - save values to uswr defaults.
-            print("button was hit")
+            print("finish was hit")
+        }
+    }
+    
+    @IBAction func cancel(_ sender: UIButton) {
+        self.dismiss(animated: true) {
+            // TODO - save values to uswr defaults.
+            print("cancel was hit")
         }
     }
     
@@ -21,7 +28,13 @@ class ConverterViewController: UIViewController {
     
     @IBOutlet weak var output: UITextField!
     
-    private var currencyFrom: String?
+    private var inputAmount: Double? {
+        return Double(input.text ?? "0")
+    }
+    
+    private var outputAmount: Double?
+    
+    private var currencyFrom: String? { didSet { updateResult()} }
 
     private var currencyTo: String?
 
@@ -73,6 +86,31 @@ class ConverterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        input.resignFirstResponder()
+    }
+    
+    private func updateResult() {
+        if let inputAmount = inputAmount {
+            output.text = String(inputAmount)
+        } else {
+            guard let input = input.text, !input.isEmpty else { return }
+            output.text = "ERROR. Please use numbers."
+        }
+    }
+    
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        updateResult()
+//    }
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        updateResult()
+//        return true
+//    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        updateResult()
+        return true
     }
     
     /*

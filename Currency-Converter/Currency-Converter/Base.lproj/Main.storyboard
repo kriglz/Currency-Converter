@@ -57,7 +57,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="pBP-y8-0Ca">
-                                                    <rect key="frame" x="20" y="5" width="340" height="82"/>
+                                                    <rect key="frame" x="20" y="5" width="246" height="82"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWT-Oz-RHE">
                                                             <rect key="frame" x="0.0" y="0.0" width="100" height="82"/>
@@ -82,7 +82,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6w-B1-sgo">
-                                                            <rect key="frame" x="130" y="0.0" width="210" height="82"/>
+                                                            <rect key="frame" x="130" y="0.0" width="116" height="82"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                             <color key="textColor" white="0.44547526041666669" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -209,7 +209,10 @@
                                                 <rect key="frame" x="8" y="9" width="264" height="32"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="L1Q-rz-6Kz" id="iCB-GN-VfC"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.90980392156862744" green="0.71764705882352942" blue="0.70588235294117641" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -262,7 +265,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9HK-bL-lDx">
                                         <rect key="frame" x="0.0" y="210" width="280" height="50"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="RESULT..." minimumFontSize="21" translatesAutoresizingMaskIntoConstraints="NO" id="HSC-h0-3tz">
+                                            <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="RESULT..." minimumFontSize="21" translatesAutoresizingMaskIntoConstraints="NO" id="HSC-h0-3tz">
                                                 <rect key="frame" x="8" y="9" width="244" height="32"/>
                                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -311,7 +314,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="finish:" destination="L1Q-rz-6Kz" eventType="touchUpInside" id="Mec-qZ-SEg"/>
+                                            <action selector="cancel:" destination="L1Q-rz-6Kz" eventType="touchUpInside" id="trR-Jp-0GF"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NsS-ZS-nCo">
@@ -352,7 +355,7 @@
                         <outlet property="fromJPY" destination="dnO-rM-wR7" id="u4R-9g-3ax"/>
                         <outlet property="fromUSD" destination="b8z-U8-Vf6" id="Abh-yi-o2n"/>
                         <outlet property="input" destination="rvp-is-oD8" id="SUw-CQ-rcv"/>
-                        <outlet property="output" destination="HSC-h0-3tz" id="WLZ-hN-r5s"/>
+                        <outlet property="output" destination="HSC-h0-3tz" id="wxU-5o-eGl"/>
                         <outlet property="toEUR" destination="nrn-TT-VeR" id="i6S-Mh-WwZ"/>
                         <outlet property="toJPY" destination="Act-M5-eMk" id="Tyb-fv-l8H"/>
                         <outlet property="toUSD" destination="tpt-Q9-1Qi" id="X6P-by-CME"/>

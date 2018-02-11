@@ -10,11 +10,11 @@ import Foundation
 
 class CurrencyModel {
     var currency: String = "EUR"
-    var currencyAmount: Float = 10000.0
-    var totalTaxes: Float = 0.0
+    var currencyAmount: Double = 10000.0
+    var totalTaxes: Double = 0.0
     var timesConverted: Int = 0
     
-    init(_ currency: String, _ currencyAmount: Float, totalTaxes: Float, timesConverted: Int) {
+    init(_ currency: String, _ currencyAmount: Double, totalTaxes: Double, timesConverted: Int) {
         self.currency = currency
         self.currencyAmount = currencyAmount
         self.totalTaxes = totalTaxes
