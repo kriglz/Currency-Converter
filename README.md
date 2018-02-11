@@ -1,5 +1,5 @@
-# Filter-Portal
-AR Portal
+# CuCon
+Currency Converter
 
 
 ![Mockups 1](./Images/icon.png)
