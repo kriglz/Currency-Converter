@@ -14,34 +14,25 @@ class AccountSummaryViewController: UIViewController {
     
     private var currencyModels = [CurrencyModel]()
     
-    private let currencyTypes = ["EUR", "USD", "JPY"]
+    private let currencyInitDefaults: [(type: String, amount: Double)] = [ ("EUR", 1000.0), ("USD", 0.0), ("JPY", 0.0)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if currencyModels.isEmpty {
             let userDefaults = UserDefaults.standard
-            if userDefaults.value(forKey: "EUR") == nil {
-                userDefaults.set(1000.0, forKey: "EUR")
-            }
-            if userDefaults.value(forKey: "USD") == nil {
-                userDefaults.set(0.0, forKey: "USD")
-            }
-            if userDefaults.value(forKey: "JPY") == nil {
-                userDefaults.set(0.0, forKey: "JPY")
-            }
-            if userDefaults.value(forKey: "timesConverted") == nil {
-                userDefaults.set(0, forKey: "timesConverted")
-            }
-
-            for currencyType in currencyTypes {
-                let currencyAmount = userDefaults.value(forKey: currencyType) as? Double
-                if let currencyAmount = currencyAmount {
-                    let newCurrency = CurrencyModel.init(currencyType,
-                                                         currencyAmount,
-                                                         totalTaxes: 0.0)
+            if userDefaults.value(forKey: "dataModels") == nil {
+                for currency in currencyInitDefaults {
+                    let newCurrency = CurrencyModel.init(currency.type, currency.amount, totalTaxes: 0.0)
                     currencyModels.append(newCurrency)
                 }
+                try? userDefaults.set(PropertyListEncoder().encode(currencyModels), forKey: "dataModels")
+                userDefaults.synchronize()
+                
+            } else {
+                let encoded = userDefaults.object(forKey: "dataModels") as! Data
+                guard let recoveredCurrencyModels = try? PropertyListDecoder().decode([CurrencyModel].self, from: encoded) else { return }
+                currencyModels = recoveredCurrencyModels
             }
         }
     }

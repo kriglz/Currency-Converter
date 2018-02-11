@@ -101,6 +101,12 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             }
+            
+            if userDefaults.value(forKey: "dataModels") != nil, let currentCurrencyModels = currentCurrencyModels {
+                try? userDefaults.set(PropertyListEncoder().encode(currentCurrencyModels), forKey: "dataModels")
+                userDefaults.synchronize()                
+            }
+            
             self.dismiss(animated: true)
             
         } else {
