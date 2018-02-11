@@ -10,7 +10,16 @@ import UIKit
 
 class ConverterViewController: UIViewController, UITextFieldDelegate {
     
+    var currentCurrencyModels: [CurrencyModel]?
+    
     @IBAction func finish(_ sender: UIButton) {
+        let userDefaults = UserDefaults.standard
+        if let userDefaultsTimesConverted = userDefaults.value(forKey: "timesConverted") as? Int {
+            userDefaults.setValue(userDefaultsTimesConverted + 1, forKey: "timesConverted")
+        }
+        
+        //TODO update currentCurrencyModels
+        
         self.dismiss(animated: true) {
             // TODO - save values to uswr defaults.
             print("finish was hit")
@@ -18,10 +27,7 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func cancel(_ sender: UIButton) {
-        self.dismiss(animated: true) {
-            // TODO - save values to uswr defaults.
-            print("cancel was hit")
-        }
+        self.dismiss(animated: true)
     }
     
     @IBOutlet weak var input: UITextField!
@@ -38,6 +44,14 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
 
     private var currencyTo: String? { didSet { updateResult() } }
 
+    @IBOutlet weak var currentEUR: UILabel!
+    
+    @IBOutlet weak var currentUSD: UILabel!
+    
+    @IBOutlet weak var currentJPY: UILabel!
+    
+    @IBOutlet weak var taxes: UILabel!
+    
     @IBOutlet weak var fromEUR: UIButton!
     
     @IBOutlet weak var fromUSD: UIButton!
@@ -86,6 +100,24 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateCurrencyAmount()
+    }
+    
+    private func updateCurrencyAmount() {
+        if let currentCurrencyModels = currentCurrencyModels {
+            for currentCurrencyModel in currentCurrencyModels {
+                switch currentCurrencyModel.currency {
+                case "EUR":
+                    currentEUR.text = "\(currentCurrencyModel.currencyAmount) EUR"
+                case "USD":
+                    currentUSD.text = "\(currentCurrencyModel.currencyAmount) USD"
+                case "JPY":
+                    currentJPY.text = "\(currentCurrencyModel.currencyAmount) JPY"
+                default:
+                    break
+                }
+            }
+        }
     }
     
     private func updateResult() {
@@ -114,6 +146,8 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
                             if let converted = ConvertedCurrencyModel(json: object) {
                                 DispatchQueue.main.async {
                                     self.output.text = String(converted.amount)
+                                    let conversionTaxesAmount = self.conversionTaxes(for: inputAmount)
+                                    self.taxes.text = "\(conversionTaxesAmount) \(currencyFrom)"
                                 }
                             } else {
                                 print("Failed to make a model.")
@@ -125,6 +159,18 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
                 }
             }
             task.resume()
+        }
+    }
+    
+    private func conversionTaxes(for convertedAmount: Double) -> Double {
+        let userDefaults = UserDefaults.standard
+        guard let userDefaultsTimesConverted = userDefaults.value(forKey: "timesConverted") as? Int else {
+            return convertedAmount * conversionTaxesRate
+        }
+        if userDefaultsTimesConverted < 5 {
+            return 0
+        } else {
+            return convertedAmount * conversionTaxesRate
         }
     }
     

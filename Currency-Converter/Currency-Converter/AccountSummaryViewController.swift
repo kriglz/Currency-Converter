@@ -30,14 +30,16 @@ class AccountSummaryViewController: UIViewController {
             if userDefaults.value(forKey: "JPY") == nil {
                 userDefaults.set(0.0, forKey: "JPY")
             }
+            if userDefaults.value(forKey: "timesConverted") == nil {
+                userDefaults.set(0, forKey: "timesConverted")
+            }
 
             for currencyType in currencyTypes {
                 let currencyAmount = userDefaults.value(forKey: currencyType) as? Double
                 if let currencyAmount = currencyAmount {
                     let newCurrency = CurrencyModel.init(currencyType,
                                                          currencyAmount,
-                                                         totalTaxes: 0.0,
-                                                         timesConverted: 0)
+                                                         totalTaxes: 0.0)
                     currencyModels.append(newCurrency)
                 }
             }
@@ -48,8 +50,9 @@ class AccountSummaryViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if let destinationSegue = segue.destination as? ConverterViewController, segue.identifier == "convert" {
+            destinationSegue.currentCurrencyModels = currencyModels
+        }
     }
 }
 

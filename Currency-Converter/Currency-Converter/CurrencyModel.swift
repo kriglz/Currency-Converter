@@ -12,13 +12,11 @@ class CurrencyModel {
     var currency: String = "EUR"
     var currencyAmount: Double = 10000.0
     var totalTaxes: Double = 0.0
-    var timesConverted: Int = 0
     
-    init(_ currency: String, _ currencyAmount: Double, totalTaxes: Double, timesConverted: Int) {
+    init(_ currency: String, _ currencyAmount: Double, totalTaxes: Double) {
         self.currency = currency
         self.currencyAmount = currencyAmount
         self.totalTaxes = totalTaxes
-        self.timesConverted = timesConverted
     }
 }
 
