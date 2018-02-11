@@ -20,10 +20,20 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
         
         //TODO update currentCurrencyModels
         
-        self.dismiss(animated: true) {
-            // TODO - save values to uswr defaults.
-            print("finish was hit")
+        if let currentCurrencyModels = currentCurrencyModels {
+            for currentCurrencyModel in currentCurrencyModels {
+                if currencyFrom == currentCurrencyModel.currency, let input = input.text, let inputAmount = Double(input), let taxes = taxes.text, let taxesAmount = Double(taxes) {
+                    currentCurrencyModel.currencyAmount -= (inputAmount + taxesAmount)
+                    currentCurrencyModel.totalTaxes += taxesAmount
+                }
+                if currencyTo == currentCurrencyModel.currency, let output = output.text, let outputAmount = Double(output) {
+                    currentCurrencyModel.currencyAmount += outputAmount
+                }
+            }
         }
+        
+        
+        self.dismiss(animated: true)
     }
     
     @IBAction func cancel(_ sender: UIButton) {
@@ -51,6 +61,8 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var currentJPY: UILabel!
     
     @IBOutlet weak var taxes: UILabel!
+    
+    @IBOutlet weak var taxesCurrency: UILabel!
     
     @IBOutlet weak var fromEUR: UIButton!
     
@@ -147,7 +159,8 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
                                 DispatchQueue.main.async {
                                     self.output.text = String(converted.amount)
                                     let conversionTaxesAmount = self.conversionTaxes(for: inputAmount)
-                                    self.taxes.text = "\(conversionTaxesAmount) \(currencyFrom)"
+                                    self.taxes.text = "\(conversionTaxesAmount)"
+                                    self.taxesCurrency.text = "\(currencyFrom)"
                                 }
                             } else {
                                 print("Failed to make a model.")

@@ -57,7 +57,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="pBP-y8-0Ca">
-                                                    <rect key="frame" x="20" y="5" width="246" height="82"/>
+                                                    <rect key="frame" x="20" y="5" width="301" height="82"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWT-Oz-RHE">
                                                             <rect key="frame" x="0.0" y="0.0" width="100" height="82"/>
@@ -82,7 +82,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6w-B1-sgo">
-                                                            <rect key="frame" x="130" y="0.0" width="116" height="82"/>
+                                                            <rect key="frame" x="130" y="0.0" width="171" height="82"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                             <color key="textColor" white="0.44547526041666669" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -366,11 +366,11 @@
                                     <constraint firstAttribute="height" constant="12" id="3EQ-Eu-QVB"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Ole-zb-EhT">
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ole-zb-EhT">
                                 <rect key="frame" x="20" y="452" width="335" height="12"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TAXES FOR CONVERSION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbz-xk-kyd">
-                                        <rect key="frame" x="0.0" y="0.0" width="167.5" height="12"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="195" height="12"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="12" id="h0Y-e3-wm3"/>
                                         </constraints>
@@ -378,8 +378,20 @@
                                         <color key="textColor" white="0.69957211279999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZtA-jf-1HQ">
-                                        <rect key="frame" x="167.5" y="0.0" width="167.5" height="12"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZtA-jf-1HQ">
+                                        <rect key="frame" x="195" y="0.0" width="100" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="DLf-iZ-P1g"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" white="0.69957211279999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XXX" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2p-CY-06k">
+                                        <rect key="frame" x="295" y="0.0" width="40" height="12"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="EXQ-fb-6Gh"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" white="0.69957211279999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -419,6 +431,7 @@
                         <outlet property="input" destination="rvp-is-oD8" id="SUw-CQ-rcv"/>
                         <outlet property="output" destination="HSC-h0-3tz" id="wxU-5o-eGl"/>
                         <outlet property="taxes" destination="ZtA-jf-1HQ" id="Dov-Zc-hOR"/>
+                        <outlet property="taxesCurrency" destination="N2p-CY-06k" id="zZW-62-lVP"/>
                         <outlet property="toEUR" destination="nrn-TT-VeR" id="i6S-Mh-WwZ"/>
                         <outlet property="toJPY" destination="Act-M5-eMk" id="Tyb-fv-l8H"/>
                         <outlet property="toUSD" destination="tpt-Q9-1Qi" id="X6P-by-CME"/>

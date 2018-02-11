@@ -63,8 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				89D60398202F246C00E5C100 /* CurrencyModel.swift */,
-				89D60392202F1C1700E5C100 /* AccountSummaryViewController.swift */,
 				89D60396202F22BB00E5C100 /* AccountSummaryTableViewCell.swift */,
+				89D60392202F1C1700E5C100 /* AccountSummaryViewController.swift */,
 				89D30D79202F837900CFCC02 /* ConverterViewController.swift */,
 				89D6037F202F195900E5C100 /* Main.storyboard */,
 				89D60387202F195900E5C100 /* Info.plist */,
