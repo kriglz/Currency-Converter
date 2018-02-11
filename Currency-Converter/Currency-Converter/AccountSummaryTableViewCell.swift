@@ -21,7 +21,12 @@ class AccountSummaryTableViewCell: UITableViewCell {
     private func updateUI() {
         guard let currencyData = currencyData else { return }
         currencyType.text = currencyData.currency
-        totalMoney.text = "\(currencyData.currencyAmount)"
+        totalMoney.text = currencyData.currencyAmount.setFloatingPointAndConvertToString()
+    }
+}
 
+extension Double {
+    func setFloatingPointAndConvertToString() -> String {
+        return String(format: "%.2f", self)
     }
 }

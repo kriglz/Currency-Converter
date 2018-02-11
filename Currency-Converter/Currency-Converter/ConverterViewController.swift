@@ -124,11 +124,11 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
             for currentCurrencyModel in currentCurrencyModels {
                 switch currentCurrencyModel.currency {
                 case "EUR":
-                    currentEUR.text = "\(currentCurrencyModel.currencyAmount) EUR"
+                    currentEUR.text = "\(currentCurrencyModel.currencyAmount.setFloatingPointAndConvertToString()) EUR"
                 case "USD":
-                    currentUSD.text = "\(currentCurrencyModel.currencyAmount) USD"
+                    currentUSD.text = "\(currentCurrencyModel.currencyAmount.setFloatingPointAndConvertToString()) USD"
                 case "JPY":
-                    currentJPY.text = "\(currentCurrencyModel.currencyAmount) JPY"
+                    currentJPY.text = "\(currentCurrencyModel.currencyAmount.setFloatingPointAndConvertToString()) JPY"
                 default:
                     break
                 }
@@ -162,7 +162,7 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
                             if let converted = ConvertedCurrencyModel(json: object) {
                                 DispatchQueue.main.async {
                                     let conversionTaxesAmount = self.conversionTaxes(for: inputAmount)
-                                    self.taxes.text = "\(conversionTaxesAmount)"
+                                    self.taxes.text = conversionTaxesAmount.setFloatingPointAndConvertToString()
                                     self.taxesCurrency.text = "\(currencyFrom)"
                                     
                                     if let currentCurrencyModels = self.currentCurrencyModels {
@@ -170,7 +170,7 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
                                             if currencyFrom == currentCurrencyModel.currency {
                                                 let totalAmount = inputAmount + conversionTaxesAmount
                                                 if currentCurrencyModel.currencyAmount >= totalAmount {
-                                                    self.output.text = String(converted.amount)
+                                                    self.output.text = converted.amount.setFloatingPointAndConvertToString()
                                                     self.canBeConverted = true
                                                 } else {
                                                     self.output.text = "Exceeding your account money."
