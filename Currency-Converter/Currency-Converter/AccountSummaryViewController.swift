@@ -12,6 +12,12 @@ class AccountSummaryViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var taxesEUR: UILabel!
+    
+    @IBOutlet weak var taxesUSD: UILabel!
+    
+    @IBOutlet weak var taxesJPY: UILabel!
+    
     private var currencyModels = [CurrencyModel]()
         
     override func viewDidLoad() {
@@ -41,7 +47,23 @@ class AccountSummaryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateTaxes()
         tableView.reloadData()
+    }
+    
+    private func updateTaxes() {
+        for currencyModel in currencyModels {
+            switch currencyModel.currency {
+            case "EUR":
+                taxesEUR.text = "\(currencyModel.totalTaxes.setFloatingPointAndConvertToString()) EUR"
+            case "USD":
+                taxesUSD.text = "\(currencyModel.totalTaxes.setFloatingPointAndConvertToString()) USD"
+            case "JPY":
+                taxesJPY.text = "\(currencyModel.totalTaxes.setFloatingPointAndConvertToString()) JPY"
+            default:
+                break
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
