@@ -12,47 +12,17 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     
     var currentCurrencyModels: [CurrencyModel]?
     
-    @IBAction func finish(_ sender: UIButton) {
-        let userDefaults = UserDefaults.standard
-        if let userDefaultsTimesConverted = userDefaults.value(forKey: "timesConverted") as? Int {
-            userDefaults.setValue(userDefaultsTimesConverted + 1, forKey: "timesConverted")
-        }
-        
-        //TODO update currentCurrencyModels
-        
-        if let currentCurrencyModels = currentCurrencyModels {
-            for currentCurrencyModel in currentCurrencyModels {
-                if currencyFrom == currentCurrencyModel.currency, let input = input.text, let inputAmount = Double(input), let taxes = taxes.text, let taxesAmount = Double(taxes) {
-                    currentCurrencyModel.currencyAmount -= (inputAmount + taxesAmount)
-                    currentCurrencyModel.totalTaxes += taxesAmount
-                }
-                if currencyTo == currentCurrencyModel.currency, let output = output.text, let outputAmount = Double(output) {
-                    currentCurrencyModel.currencyAmount += outputAmount
-                }
-            }
-        }
-        
-        
-        self.dismiss(animated: true)
-    }
-    
-    @IBAction func cancel(_ sender: UIButton) {
-        self.dismiss(animated: true)
-    }
-    
-    @IBOutlet weak var input: UITextField!
-    
-    @IBOutlet weak var output: UITextField!
-    
     private var inputAmount: Double? {
         return Double(input.text ?? "0")
     }
     
-    private var outputAmount: Double?
-    
     private var currencyFrom: String? { didSet { updateResult() } }
-
+    
     private var currencyTo: String? { didSet { updateResult() } }
+    
+    @IBOutlet weak var input: UITextField!
+    
+    @IBOutlet weak var output: UITextField!
 
     @IBOutlet weak var currentEUR: UILabel!
     
@@ -64,16 +34,22 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var taxesCurrency: UILabel!
     
+    lazy var fromButtons: [UIButton] = [fromEUR, fromUSD, fromJPY]
+    
+    lazy var toButtons: [UIButton] = [toEUR, toUSD, toJPY]
+    
     @IBOutlet weak var fromEUR: UIButton!
     
     @IBOutlet weak var fromUSD: UIButton!
     
     @IBOutlet weak var fromJPY: UIButton!
-    
-    lazy var fromButtons: [UIButton] = [fromEUR, fromUSD, fromJPY]
-    
-    lazy var toButtons: [UIButton] = [toEUR, toUSD, toJPY]
 
+    @IBOutlet weak var toEUR: UIButton!
+    
+    @IBOutlet weak var toUSD: UIButton!
+    
+    @IBOutlet weak var toJPY: UIButton!
+    
     @IBAction func fromEUR(_ sender: UIButton) {
         sender.updateState(in: fromButtons)
         currencyFrom = sender.titleLabel?.text
@@ -89,12 +65,6 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
         currencyFrom = sender.titleLabel?.text
     }
     
-    @IBOutlet weak var toEUR: UIButton!
-    
-    @IBOutlet weak var toUSD: UIButton!
-    
-    @IBOutlet weak var toJPY: UIButton!
-    
     @IBAction func toEUR(_ sender: UIButton) {
         sender.updateState(in: toButtons)
         currencyTo = sender.titleLabel?.text
@@ -108,6 +78,40 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     @IBAction func toJPY(_ sender: UIButton) {
         sender.updateState(in: toButtons)
         currencyTo = sender.titleLabel?.text
+    }
+    
+    private var canBeConverted: Bool = false
+    
+    @IBAction func finish(_ sender: UIButton) {
+        if canBeConverted {
+            let userDefaults = UserDefaults.standard
+            if let userDefaultsTimesConverted = userDefaults.value(forKey: "timesConverted") as? Int {
+                userDefaults.setValue(userDefaultsTimesConverted + 1, forKey: "timesConverted")
+            }
+            
+            if let currentCurrencyModels = currentCurrencyModels {
+                for currentCurrencyModel in currentCurrencyModels {
+                    if currencyFrom == currentCurrencyModel.currency, let input = input.text, let inputAmount = Double(input), let taxes = taxes.text, let taxesAmount = Double(taxes) {
+                        currentCurrencyModel.currencyAmount -= (inputAmount + taxesAmount)
+                        currentCurrencyModel.totalTaxes += taxesAmount
+                    }
+                    
+                    if currencyTo == currentCurrencyModel.currency, let output = output.text, let outputAmount = Double(output) {
+                        currentCurrencyModel.currencyAmount += outputAmount
+                    }
+                }
+            }
+            self.dismiss(animated: true)
+            
+        } else {
+            let alert = UIAlertController(title: "Operation has failed", message: "Please enter valid operation to proceed.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func cancel(_ sender: UIButton) {
+        self.dismiss(animated: true)
     }
     
     override func viewDidLoad() {
@@ -134,13 +138,13 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
     
     private func updateResult() {
         guard let currencyTo = currencyTo, let currencyFrom = currencyFrom  else {
-            output.text = "ERROR. Please chose currencies."
+            output.text = "Error - Please choose currencies."
             return
         }
         
         guard let inputAmount = inputAmount else {
             guard let input = input.text, !input.isEmpty else {
-                output.text = "ERROR. Please use numbers."
+                output.text = "Error - Please use numbers."
                 return
             }
             return
@@ -157,10 +161,24 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
                             let object = try JSONSerialization.jsonObject(with: data) as! [String: Any]
                             if let converted = ConvertedCurrencyModel(json: object) {
                                 DispatchQueue.main.async {
-                                    self.output.text = String(converted.amount)
                                     let conversionTaxesAmount = self.conversionTaxes(for: inputAmount)
                                     self.taxes.text = "\(conversionTaxesAmount)"
                                     self.taxesCurrency.text = "\(currencyFrom)"
+                                    
+                                    if let currentCurrencyModels = self.currentCurrencyModels {
+                                        for currentCurrencyModel in currentCurrencyModels {
+                                            if currencyFrom == currentCurrencyModel.currency {
+                                                let totalAmount = inputAmount + conversionTaxesAmount
+                                                if currentCurrencyModel.currencyAmount >= totalAmount {
+                                                    self.output.text = String(converted.amount)
+                                                    self.canBeConverted = true
+                                                } else {
+                                                    self.output.text = "Exceeding your account money."
+                                                    self.canBeConverted = false
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             } else {
                                 print("Failed to make a model.")
@@ -200,16 +218,6 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
         updateResult()
         return true
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 extension UIButton {
