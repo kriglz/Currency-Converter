@@ -43,7 +43,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WXm-AV-kFo">
-                                <rect key="frame" x="16" y="158" width="341" height="300"/>
+                                <rect key="frame" x="16" y="168" width="341" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="7CS-7C-J3j"/>
@@ -114,7 +114,7 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EUs-S9-yzL">
                                 <rect key="frame" x="85" y="567" width="205" height="80"/>
-                                <color key="backgroundColor" red="0.50727870702214617" green="0.71296125281232881" blue="0.74913506277926678" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.90800577402114868" green="0.71796905994415283" blue="0.7058759331703186" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="K3l-CC-Rh5"/>
                                 </constraints>
@@ -134,8 +134,8 @@
                             <constraint firstItem="WXm-AV-kFo" firstAttribute="leading" secondItem="IuD-Od-tgs" secondAttribute="leading" constant="16" id="cNJ-J7-29R"/>
                             <constraint firstItem="WXm-AV-kFo" firstAttribute="centerX" secondItem="IuD-Od-tgs" secondAttribute="centerX" constant="-1" id="eZn-tt-aNJ"/>
                             <constraint firstItem="IuD-Od-tgs" firstAttribute="trailing" secondItem="nVq-Sy-fNp" secondAttribute="trailing" id="f6h-OU-P7h"/>
-                            <constraint firstItem="WXm-AV-kFo" firstAttribute="top" secondItem="IuD-Od-tgs" secondAttribute="top" constant="138" id="kxh-K9-RTo"/>
-                            <constraint firstItem="WXm-AV-kFo" firstAttribute="top" secondItem="nVq-Sy-fNp" secondAttribute="bottom" constant="20" id="mCt-eG-f1c"/>
+                            <constraint firstItem="WXm-AV-kFo" firstAttribute="top" secondItem="IuD-Od-tgs" secondAttribute="top" constant="148" id="kxh-K9-RTo"/>
+                            <constraint firstItem="WXm-AV-kFo" firstAttribute="top" secondItem="nVq-Sy-fNp" secondAttribute="bottom" constant="30" id="mCt-eG-f1c"/>
                             <constraint firstItem="IuD-Od-tgs" firstAttribute="trailing" secondItem="EUs-S9-yzL" secondAttribute="trailing" constant="85" id="pA8-Zj-rba"/>
                             <constraint firstItem="nVq-Sy-fNp" firstAttribute="top" secondItem="aod-m2-SFO" secondAttribute="top" id="rdD-R2-Twg"/>
                             <constraint firstItem="IuD-Od-tgs" firstAttribute="bottom" secondItem="EUs-S9-yzL" secondAttribute="bottom" constant="20" id="yqc-cN-c9u"/>

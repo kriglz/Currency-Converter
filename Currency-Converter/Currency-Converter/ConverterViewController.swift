@@ -205,13 +205,10 @@ class ConverterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        updateResult()
-//    }
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        updateResult()
-//        return true
-//    }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        output.text = nil
+        return true
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
