@@ -1,5 +1,5 @@
 //
-//  ConverterTableViewCell.swift
+//  AccountSummaryTableViewCell.swift
 //  Currency-Converter
 //
 //  Created by Kristina Gelzinyte on 2/10/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConverterTableViewCell: UITableViewCell {
+class AccountSummaryTableViewCell: UITableViewCell {
 
     var currencyData: CurrencyModel? { didSet { updateUI() } }
     
